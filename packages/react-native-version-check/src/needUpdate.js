@@ -96,6 +96,10 @@ export default async function needUpdate(
   }
 }
 
+function cleanVersion(version) {
+  return version.split('.').map(Number).join('.');
+}
+
 function checkIfUpdateNeeded(
   currentVersion,
   latestVersion,
@@ -112,7 +116,7 @@ function checkIfUpdateNeeded(
   );
 
   const response = {
-    isNeeded: semver.gt(latestVersionWithDepth, currentVersionWithDepth),
+    isNeeded: semver.gt(cleanVersion(latestVersionWithDepth), cleanVersion(currentVersionWithDepth)),
     storeUrl: providerStoreUrl,
     currentVersion,
     latestVersion,
